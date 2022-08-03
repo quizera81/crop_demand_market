@@ -77,9 +77,17 @@ WSGI_APPLICATION = "crop_demand_market.wsgi.application"
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 DATABASES = {
+    # "default": {
+    #     "ENGINE": "django.db.backends.sqlite3",
+    #     "NAME": BASE_DIR / "db.sqlite3",
+    # }
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "ENGINE": "django.db.backends.postgresql_psycopg2",
+        "NAME": "dbil3ao1r44bvd",
+        "USER": "pdzghaauthxojg",
+        "PASSWORD": "ac963c63e49e37758c6d23351954e917e4d6374070ef2de71644c3283b414457",
+        "HOST": "ec2-44-205-64-253.compute-1.amazonaws.com",
+        "PORT": "5432",
     }
 }
 
