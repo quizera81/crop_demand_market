@@ -5,6 +5,13 @@ from django.http import HttpResponse, JsonResponse
 from django.contrib.auth.models import User, auth
 from django.forms.models import model_to_dict
 from django.contrib import messages
+from .models import Crop, Transaction, Category
+
+
+@require_http_methods(["GET"])
+def home(request):
+    crops = Crop.objects.all()[:10]
+    return render(request, "home.html", {"crops": crops})
 
 
 @require_http_methods(["GET"])
@@ -23,9 +30,9 @@ def search(request):
 @require_http_methods(["GET"])
 @login_required(login_url="signin")
 def dashboard(request):
-    product_count = Product.objects.count()
-    service_count = Service.objects.count()
-    notification_count = Notification.objects.count()
+    product_count = Crop.objects.count()
+    service_count = Category.objects.count()
+    notification_count = Transaction.objects.count()
 
     return render(
         request,
@@ -87,10 +94,22 @@ def signin(request):
             return redirect("signin")
 
         auth.login(request, user)
-        return redirect("home")
+        return redirect("dashboard")
 
 
 @login_required(login_url="signin")
 def logout(request):
     auth.logout(request)
     return redirect("home")
+
+
+def crop_create(request):
+    return render(request, "crop/create.html")
+
+
+def category_create(request):
+    return render(request, "category/create.html")
+
+
+def season_create(request):
+    return render(request, "season/create.html")

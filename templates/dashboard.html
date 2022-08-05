@@ -1,0 +1,31 @@
+{% extends 'layouts/admin.html' %}
+{% block title %} Dashboard - FEDA {% endblock %}
+{% block content %}
+<div class="row">
+  <div class="col-md-3 col-sm-6 mb-3">
+    <div class="card card-body shadow-sm">
+      <h1>{{ product_count }}</h1>
+      <a href="{% url 'home' %}" class='btn btn-sm btn-outline-primary'><i class="bi bi-box me-1"></i> Products</a>
+    </div>
+  </div>
+  <div class="col-md-3 col-sm-6 mb-3">
+    <div class="card card-body shadow-sm">
+      <h1>{{ service_count }}</h1>
+      <a href="{% url 'home' %}" class='btn btn-sm btn-outline-primary'><i class="bi bi-check2-circle me-1"></i> Services</a>
+    </div>
+  </div>
+  <div class="col-md-3 col-sm-6 mb-3">
+    <div class="card card-body shadow-sm">
+      <h1>{{ '0' }}</h1>
+      <a href="{% url 'home' %}" class='btn btn-sm btn-outline-primary'><i class="bi bi-chat-dots me-1"></i> Chat messages</a>
+    </div>
+  </div>
+  <div class="col-md-3 col-sm-6 mb-3">
+    <div class="card card-body shadow-sm">
+      <h1>{{ notification_count }}</h1>
+      <a href="{% url 'home' %}" class='btn btn-sm btn-outline-primary'><i class="bi bi-bell me-1"></i> Notifications</a>
+    </div>
+  </div>
+  
+</div>
+{% endblock %}

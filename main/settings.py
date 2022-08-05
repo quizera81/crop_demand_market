@@ -52,7 +52,7 @@ MIDDLEWARE = [
     "debug_toolbar.middleware.DebugToolbarMiddleware",
 ]
 
-ROOT_URLCONF = "crop_demand_market.urls"
+ROOT_URLCONF = "main.urls"
 
 TEMPLATES = [
     {
@@ -70,7 +70,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = "crop_demand_market.wsgi.application"
+WSGI_APPLICATION = "main.wsgi.application"
 
 
 # Database
@@ -83,10 +83,10 @@ DATABASES = {
     # }
     "default": {
         "ENGINE": "django.db.backends.postgresql_psycopg2",
-        "NAME": "dbil3ao1r44bvd",
-        "USER": "pdzghaauthxojg",
-        "PASSWORD": "ac963c63e49e37758c6d23351954e917e4d6374070ef2de71644c3283b414457",
-        "HOST": "ec2-44-205-64-253.compute-1.amazonaws.com",
+        "NAME": "Final_Project2022",
+        "USER": "postgres",
+        "PASSWORD": "password",
+        "HOST": "localhost",
         "PORT": "5432",
     }
 }
