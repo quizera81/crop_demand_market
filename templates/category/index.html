@@ -1,0 +1,13 @@
+{% extends 'layouts/admin.html' %}
+{% load static %}
+{% block title %} Category {% endblock %}
+{% block content %}
+<h4>All Category</h4>
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+    <li class="breadcrumb-item"><a href="{% url 'category.index' %}">Category</a></li>
+    <li class="breadcrumb-item active" aria-current="page">All Category</li>
+  </ol>
+</nav>
+{% endblock %}

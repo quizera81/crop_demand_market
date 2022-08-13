@@ -5,8 +5,10 @@ from django.http import HttpResponse, JsonResponse
 from django.contrib.auth.models import User, auth
 from django.forms.models import model_to_dict
 from django.contrib import messages
-from .models import Crop, Transaction, Category
-
+from ..models import Crop, Transaction, Category
+from .category import *
+from .crop import *
+from .season import *
 
 @require_http_methods(["GET"])
 def home(request):
@@ -103,13 +105,5 @@ def logout(request):
     return redirect("home")
 
 
-def crop_create(request):
-    return render(request, "crop/create.html")
 
 
-def category_create(request):
-    return render(request, "category/create.html")
-
-
-def season_create(request):
-    return render(request, "season/create.html")
