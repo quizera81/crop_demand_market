@@ -29,10 +29,10 @@
             <a class="nav-link {% if '/crop' in request.path %} active {% endif %}" href="{% url 'crop.index' %}">Crop</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link {% if '/partner' in request.path %} active {% endif %}" href="{% url 'home' %}">Cooperative</a>
+            <a class="nav-link {% if '/cooperative' in request.path %} active {% endif %}" href="{% url 'cooperative.index' %}">Cooperative</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link {% if '/service' in request.path %} active {% endif %}" href="{% url 'home' %}">Transaction</a>
+            <a class="nav-link {% if '/transaction' in request.path %} active {% endif %}" href="{% url 'transaction.index' %}">Transaction</a>
           </li>
           {% if user.is_authenticated %}
           <li class="nav-item">

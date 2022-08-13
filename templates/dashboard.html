@@ -6,26 +6,26 @@
 <div class="row">
   <div class="col-md-3 col-sm-6 mb-3">
     <div class="card card-body shadow-sm">
-      <h1>{{ product_count }}</h1>
-      <a href="{% url 'home' %}" class='btn btn-sm btn-outline-primary'><i class="bi bi-box me-1"></i>Season</a>
+      <h1>{{ season_count }}</h1>
+      <a href="{% url 'season.index' %}" class='btn btn-sm btn-outline-primary'><i class="bi bi-cloud-rain me-1"></i> Season</a>
     </div>
   </div>
   <div class="col-md-3 col-sm-6 mb-3">
     <div class="card card-body shadow-sm">
-      <h1>{{ service_count }}</h1>
-      <a href="{% url 'home' %}" class='btn btn-sm btn-outline-primary'><i class="bi bi-check2-circle me-1"></i>crops</a>
+      <h1>{{ crop_count }}</h1>
+      <a href="{% url 'crop.index' %}" class='btn btn-sm btn-outline-primary'><i class="bi bi-flower1 me-1"></i> Crop</a>
     </div>
   </div>
   <div class="col-md-3 col-sm-6 mb-3">
     <div class="card card-body shadow-sm">
-      <h1>{{ '0' }}</h1>
-      <a href="{% url 'home' %}" class='btn btn-sm btn-outline-primary'><i class="bi bi-chat-dots me-1"></i>Category</a>
+      <h1>{{ category_count }}</h1>
+      <a href="{% url 'category.index' %}" class='btn btn-sm btn-outline-primary'><i class="bi bi-box me-1"></i> Category</a>
     </div>
   </div>
   <div class="col-md-3 col-sm-6 mb-3">
     <div class="card card-body shadow-sm">
-      <h1>{{ notification_count }}</h1>
-      <a href="{% url 'home' %}" class='btn btn-sm btn-outline-primary'><i class="bi bi-bell me-1"></i> Notifications</a>
+      <h1>{{ transaction_count }}</h1>
+      <a href="{% url 'transaction.index' %}" class='btn btn-sm btn-outline-primary'><i class="bi bi-bar-chart me-1"></i> Transaction</a>
     </div>
   </div>
   <div class="col-md-6">

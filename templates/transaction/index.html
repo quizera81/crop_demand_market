@@ -1,39 +1,39 @@
 {% extends 'layouts/admin.html' %}
 {% load static %}
-{% block title %} Crop {% endblock %}
+{% block title %} Transaction {% endblock %}
 {% block content %}
-<h4>All Crop</h4>
+<h4>All Transaction</h4>
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
-    <li class="breadcrumb-item"><a href="{% url 'crop.index' %}">Crop</a></li>
-    <li class="breadcrumb-item active" aria-current="page">All Crop</li>
+    <li class="breadcrumb-item"><a href="{% url 'transaction.index' %}">Transaction</a></li>
+    <li class="breadcrumb-item active" aria-current="page">All Transaction</li>
   </ol>
 </nav>
-<a href="{% url 'crop.create' %}" class="btn btn-primary float-end">Add new crop</a>
+<a href="{% url 'transaction.create' %}" class="btn btn-primary float-end">Add new transaction</a>
 {% include 'partials/messages.html' %}
 <table class="table">
   <thead>
     <tr>
-      <th scope="col">Name</th>
-      <th scope="col">Image</th>
-      <th scope="col">Season</th>
-      <th scope="col">Category</th>
+      <th scope="col">Crop</th>
+      <th scope="col">Description</th>
+      <th scope="col">Transaction</th>
+      <th scope="col">Quantity</th>
       <th scope="col">Time</th> 
       <th scope="col">Action</th>
     </tr>
   </thead>
   <tbody>
-    {% for crop in page_object %}
+    {% for transaction in page_object %}
     <tr>
-      <td>{{crop.name}}</td>
-      <td><img src='/media/{{crop.image}}' width="50"/></td>
-      <td>{{crop.season.name}}</td>
-      <td>{{crop.category.name}}</td>
-      <td>{{crop.created_at}}</td>
+      <td><img src='/media/{{transaction.crop.image}}' width='50'/></td>
+      <td>{{transaction.description}}</td>
+      <td>{{transaction.transaction_type}}</td>
+      <td>{{transaction.quantity}}</td>
+      <td>{{transaction.created_at}}</td>
       <td>
         <a href="" class="btn btn-info">Edit</a>
-        <a href="{% url 'crop.delete' id=crop.id %}" class="btn btn-warning">Delete</a>
+        <a href="{% url 'transaction.delete' id=transaction.id %}" class="btn btn-warning">Delete</a>
       </td>
     </tr>
     {% endfor %}

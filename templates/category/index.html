@@ -10,4 +10,40 @@
     <li class="breadcrumb-item active" aria-current="page">All Category</li>
   </ol>
 </nav>
+<a href="{% url 'category.create' %}" class="btn btn-primary float-end">Add new category</a>
+{% include 'partials/messages.html' %}
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Name</th>
+      <th scope="col">Description</th>
+      <th scope="col">Time</th> 
+      <th scope="col">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for category in page_object %}
+    <tr>
+      <td>{{category.name}}</td>
+      <td>{{category.description}}</td>
+      <td>{{category.created_at}}</td>
+      <td>
+        <a href="" class="btn btn-info">Edit</a>
+        <a href="{% url 'category.delete' id=category.id %}" class="btn btn-warning">Delete</a>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+<nav aria-label="pagination">
+  <ul class="pagination justify-content-center">
+    {% if page_object.has_previous %}
+    <li class="page-item"><a class="page-link" href='?page={{ page_object.previous_page_number }}'><i class='bi bi-chevron-left'></i></a></li>
+    {% endif %}
+    <li class="page-item"><a class="page-link" href="#">{{ page_object.number }} / {{ page_object.paginator.num_pages }}</a></li>
+    {% if page_object.has_next %}
+    <li class="page-item"><a class="page-link" href='?page={{ page_object.next_page_number }}'><i class='bi bi-chevron-right'></i></a></li>
+    {% endif %}
+  </ul>
+</nav>
 {% endblock %}

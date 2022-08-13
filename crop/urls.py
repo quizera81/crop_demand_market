@@ -26,4 +26,15 @@ urlpatterns = [
     path("category/<int:id>/edit", views.category_edit, name="category.edit"),
     path("category/<int:id>/delete", views.category_delete, name="category.delete"),
     path("category/<int:id>", views.category_show, name="category.show"),
+    path("cooperative", views.cooperative_index, name="cooperative.index"),
+    path("cooperative/<int:id>", views.cooperative_show, name="cooperative.show"),
+    path("transaction", views.transaction_index, name="transaction.index"),
+    path("transaction/create", views.transaction_create, name="transaction.create"),
+    path("transaction/<int:id>/edit", views.transaction_edit, name="transaction.edit"),
+    path(
+        "transaction/<int:id>/delete",
+        views.transaction_delete,
+        name="transaction.delete",
+    ),
+    path("transaction/<int:id>", views.transaction_show, name="transaction.show"),
 ]

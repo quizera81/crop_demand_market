@@ -10,6 +10,8 @@ from ..models import Crop, Transaction, Category, Cooperative, Season
 from .category import *
 from .crop import *
 from .season import *
+from .transaction import *
+from .cooperative import *
 
 
 @require_http_methods(["GET"])
@@ -50,17 +52,19 @@ def search(request):
 @require_http_methods(["GET"])
 @login_required(login_url="signin")
 def dashboard(request):
-    product_count = Crop.objects.count()
-    service_count = Category.objects.count()
-    notification_count = Transaction.objects.count()
+    crop_count = Crop.objects.count()
+    season_count = Season.objects.count()
+    category_count = Category.objects.count()
+    transaction_count = Transaction.objects.count()
 
     return render(
         request,
         "dashboard.html",
         {
-            "product_count": product_count,
-            "service_count": service_count,
-            "notification_count": notification_count,
+            "crop_count": crop_count,
+            "season_count": season_count,
+            "category_count": category_count,
+            "transaction_count": transaction_count,
         },
     )
 
@@ -121,3 +125,8 @@ def signin(request):
 def logout(request):
     auth.logout(request)
     return redirect("home")
+
+
+@login_required(login_url="signin")
+def settings(request):
+    return HttpResponse("settings")

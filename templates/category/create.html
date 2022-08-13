@@ -2,12 +2,12 @@
 {% load static %}
 {% block title %} Category {% endblock %}
 {% block content %}
-<h4>Add new Category</h4>
+<h4>Add new category</h4>
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
     <li class="breadcrumb-item"><a href="{% url 'dashboard' %}">Category</a></li>
-    <li class="breadcrumb-item active" aria-current="page">Add new Category</li>
+    <li class="breadcrumb-item active" aria-current="page">Add new category</li>
   </ol>
 </nav>
 <form action="#" method="post" enctype='multipart/form-data'>
@@ -24,7 +24,7 @@
   {% csrf_token %}
   <div class='d-flex justify-content-between'>
     <button class="btn btn-primary" type="submit">Continue</button>
-    <a class="btn btn-link" href="{% url 'dashboard' %}">All categories</a>
+    <a class="btn btn-link" href="{% url 'category.index' %}">All categories</a>
   </div>
 </form>
 {% endblock %}

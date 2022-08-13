@@ -11,8 +11,8 @@ from ..models import Crop, Transaction, Category
 
 @login_required(login_url="signin")
 def category_index(request):
-    categorys = Category.objects.order_by("-id")
-    paginator = Paginator(categorys, 10)
+    categories = Category.objects.order_by("-id")
+    paginator = Paginator(categories, 10)
     page_number = request.GET.get("page")
     page_object = paginator.get_page(page_number)
 
