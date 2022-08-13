@@ -1,3 +1,4 @@
+from unicodedata import category
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.http import require_http_methods
 from django.contrib.auth.decorators import login_required
@@ -6,11 +7,22 @@ from django.contrib.auth.models import User, auth
 from django.core.paginator import Paginator
 from django.forms.models import model_to_dict
 from django.contrib import messages
-from ..models import Crop, Transaction, Category
+from ..models import Crop, Transaction, Category, Season
 
 
 def crop_create(request):
-    return render(request, "crop/create.html")
+    if request.method == "GET":
+        seasons = Season.objects.all()
+        categories = Category.objects.all()
+
+        return render(
+            request, "crop/create.html", {"seasons": seasons, "categories": categories}
+        )
+    elif request.method == "POST":
+        category = request.POST["category"]
+        season = request.POST["season"]
+        name = request.POST["name"]
+        description = request.POST["description"]
 
 
 def crop_delete(request, id):
