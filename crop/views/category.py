@@ -1,4 +1,3 @@
-from unicodedata import category
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.http import require_http_methods
 from django.contrib.auth.decorators import login_required
@@ -10,19 +9,7 @@ from django.contrib import messages
 from ..models import Crop, Transaction, Category
 
 
-def category_create(request):
-    return render(request, "category/create.html")
-
-def category_delete(request, id):
-    category = get_object_or_404(Category, pk=id)
-
-    if category.user_id == request.user.id:
-        category.delete()
-        messages.info(request, "category deleted")
-
-    return redirect("category.index")
-
-
+@login_required(login_url="signin")
 def category_index(request):
     categorys = Category.objects.order_by("-id")
     paginator = Paginator(categorys, 10)
@@ -31,3 +18,52 @@ def category_index(request):
 
     return render(request, "category/index.html", {"page_object": page_object})
 
+
+@login_required(login_url="signin")
+def category_show(request, id):
+    category = get_object_or_404(Category, pk=id)
+    return JsonResponse(model_to_dict(category))
+
+
+@login_required(login_url="signin")
+def category_create(request):
+    if request.method == "GET":
+        return render(request, "category/create.html")
+
+    elif request.method == "POST":
+        name = request.POST["name"]
+        description = request.POST["description"]
+        category = Category(name=name, description=description, user_id=request.user.id)
+        category.save()
+
+        messages.info(request, "Category saved")
+        return redirect("category.index")
+
+
+@login_required(login_url="signin")
+def category_edit(request, id):
+    category = get_object_or_404(Category, pk=id)
+
+    if request.method == "GET":
+        return render(request, "category/edit.html", {"category": category})
+
+    elif request.method == "POST":
+        category.name = request.POST["name"]
+        category.description = request.POST["description"]
+
+        if category.user_id == request.user.id:
+            category.save()
+            messages.info(request, "Category updated")
+
+        return redirect("category.index")
+
+
+@login_required(login_url="signin")
+def category_delete(request, id):
+    category = get_object_or_404(Category, pk=id)
+
+    if category.user_id == request.user.id:
+        category.delete()
+        messages.info(request, "Category deleted")
+
+    return redirect("category.index")

@@ -5,10 +5,12 @@ from django.http import HttpResponse, JsonResponse
 from django.contrib.auth.models import User, auth
 from django.forms.models import model_to_dict
 from django.contrib import messages
-from ..models import Crop, Transaction, Category
+from django.db.models import Q
+from ..models import Crop, Transaction, Category, Cooperative, Season
 from .category import *
 from .crop import *
 from .season import *
+
 
 @require_http_methods(["GET"])
 def home(request):
@@ -25,10 +27,26 @@ def profile(request, id):
 @require_http_methods(["GET"])
 def search(request):
     keyword = request.GET.get("keyword")
-    return render(request, "search.html", {"keyword": keyword})
+    crops = Crop.objects.filter(Q(name=keyword))
+    seasons = Season.objects.filter(Q(name=keyword))
+    categories = Category.objects.filter(Q(name=keyword))
+    transactions = Transaction.objects.filter(Q(name=keyword))
+    cooperatives = Cooperative.objects.filter(Q(name=keyword))
+
+    return render(
+        request,
+        "search.html",
+        {
+            "keyword": keyword,
+            "crops": crops,
+            "seasons": seasons,
+            "categories": categories,
+            "transactions": transactions,
+            "cooperatives": cooperatives,
+        },
+    )
 
 
-# Create your views here.
 @require_http_methods(["GET"])
 @login_required(login_url="signin")
 def dashboard(request):
@@ -103,7 +121,3 @@ def signin(request):
 def logout(request):
     auth.logout(request)
     return redirect("home")
-
-
-
-

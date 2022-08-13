@@ -1,6 +1,6 @@
 {% extends 'layouts/admin.html' %}
 {% load static %}
-{% block title %} Partner {% endblock %}
+{% block title %} Crop {% endblock %}
 {% block content %}
 <h4>Add new crop</h4>
 <nav aria-label="breadcrumb">
@@ -14,15 +14,25 @@
   <div class='row'>
     <div class="col-md-6 mb-2">
       <label for="name" class="form-label">Name</label>
-      <input type="text" class="form-control" name="name" placeholder='full name' />
+      <input type="text" class="form-control" name="name" placeholder='crop name' />
     </div>
     <div class="col-md-6 mb-2">
       <label for="tags" class="form-label">Season</label>
-      <input type="text" class="form-control" name="tags" placeholder='Season A, Season B' />
+      <select name='season' class='form-control'>
+        <option value=''> - season - </option>
+        {% for season in seasons %}
+        <option value='{{ season.id }}'>{{ season.name }}</option>
+        {% endfor %}
+      </select>
     </div>
     <div class="col-md-6 mb-2">
       <label for="website" class="form-label">Category</label>
-      <input type="text" class="form-control" name="website" placeholder='cash crops' />
+      <select name='category' class='form-control'>
+        <option value=''> - category - </option>
+        {% for category in categories %}
+        <option value='{{ category.id }}'>{{ category.name }}</option>
+        {% endfor %}
+      </select>
     </div>
     <div class="col-md-6 mb-2">
       <label for="image" class="form-label">Image</label>

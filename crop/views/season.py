@@ -9,20 +9,7 @@ from django.contrib import messages
 from ..models import Crop, Transaction, Season
 
 
-def season_create(request):
-    return render(request, "season/create.html")
-
-
-def season_delete(request, id):
-    season = get_object_or_404(Season, pk=id)
-
-    if season.user_id == request.user.id:
-        season.delete()
-        messages.info(request, "season deleted")
-
-    return redirect("season.index")
-
-
+@login_required(login_url="signin")
 def season_index(request):
     seasons = Season.objects.order_by("-id")
     paginator = Paginator(seasons, 10)
@@ -30,3 +17,53 @@ def season_index(request):
     page_object = paginator.get_page(page_number)
 
     return render(request, "season/index.html", {"page_object": page_object})
+
+
+@login_required(login_url="signin")
+def season_show(request, id):
+    season = get_object_or_404(Season, pk=id)
+    return JsonResponse(model_to_dict(season))
+
+
+@login_required(login_url="signin")
+def season_create(request):
+    if request.method == "GET":
+        return render(request, "season/create.html")
+
+    elif request.method == "POST":
+        name = request.POST["name"]
+        description = request.POST["description"]
+        season = Season(name=name, description=description, user_id=request.user.id)
+        season.save()
+
+        messages.info(request, "Season saved")
+        return redirect("season.index")
+
+
+@login_required(login_url="signin")
+def season_edit(request, id):
+    season = get_object_or_404(Season, pk=id)
+
+    if request.method == "GET":
+        return render(request, "season/edit.html", {"season": season})
+
+    elif request.method == "POST":
+        season.name = request.POST["name"]
+        season.description = request.POST["description"]
+
+        if season.user_id == request.user.id:
+            season.save()
+            messages.info(request, "Season updated")
+
+        return redirect("season.index")
+
+
+@login_required(login_url="signin")
+def season_delete(request, id):
+    season = get_object_or_404(Season, pk=id)
+
+    if season.user_id == request.user.id:
+        season.delete()
+        messages.info(request, "Season deleted")
+
+    return redirect("season.index")
