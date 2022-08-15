@@ -27,7 +27,12 @@
     </div>
     <div class="col-md-4 mb-2">
       <label for="name" class="form-label">Transaction Type</label>
-      <input type="text" class="form-control" name="type" placeholder='stock in, stock out, expired' />
+      <select name="type" class="form-control">
+        <option value=""> - select transaction type - </option>
+        <option value="received">received</option>
+        <option value="sold">sold</option>
+        <option value="expired">expired</option>
+      </select>
     </div>
   </div>
   <div class="mb-2">

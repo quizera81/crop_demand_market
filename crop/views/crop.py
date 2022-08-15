@@ -8,6 +8,7 @@ from django.forms.models import model_to_dict
 from django.contrib import messages
 from ..models import Crop, Transaction, Category, Season
 
+
 @login_required(login_url="signin")
 def crop_index(request):
     crops = Crop.objects.order_by("-id")
@@ -37,12 +38,14 @@ def crop_create(request):
     elif request.method == "POST":
         category = request.POST["category"]
         season = request.POST["season"]
+        cost = request.POST["cost"]
         name = request.POST["name"]
         description = request.POST["description"]
         crop = Crop(
             name=name,
             season_id=season,
             category_id=category,
+            production_cost=cost,
             description=description,
             user_id=request.user.id,
         )
@@ -71,6 +74,7 @@ def crop_edit(request, id):
 
     elif request.method == "POST":
         crop.name = request.POST["name"]
+        crop.cost = request.POST["cost"]
         crop.season_id = request.POST["season"]
         crop.category_id = request.POST["category"]
         crop.description = request.POST["description"]

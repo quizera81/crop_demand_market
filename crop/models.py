@@ -30,6 +30,7 @@ class Category(models.Model):
 class Crop(models.Model):
     name = models.CharField(max_length=200, unique=True)
     description = models.TextField()
+    production_cost = models.FloatField(default=0)
     season = models.ForeignKey(Season, on_delete=models.CASCADE)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)

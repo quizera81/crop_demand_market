@@ -17,6 +17,10 @@
       <input type="text" class="form-control" name="name" placeholder='crop name' />
     </div>
     <div class="col-md-6 mb-2">
+      <label for="name" class="form-label">Production Cost</label>
+      <input type="number" class="form-control" name="cost" placeholder='500' />
+    </div>
+    <div class="col-md-4 mb-2">
       <label for="tags" class="form-label">Season</label>
       <select name='season' class='form-control'>
         <option value=''> - select season - </option>
@@ -25,7 +29,7 @@
         {% endfor %}
       </select>
     </div>
-    <div class="col-md-6 mb-2">
+    <div class="col-md-4 mb-2">
       <label for="website" class="form-label">Category</label>
       <select name='category' class='form-control'>
         <option value=''> - select category - </option>
@@ -34,7 +38,7 @@
         {% endfor %}
       </select>
     </div>
-    <div class="col-md-6 mb-2">
+    <div class="col-md-4 mb-2">
       <label for="image" class="form-label">Image</label>
       <input type="file" class="form-control" name='image' accept='image/*' />
     </div>
