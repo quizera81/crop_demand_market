@@ -39,6 +39,7 @@ def crop_create(request):
         category = request.POST["category"]
         season = request.POST["season"]
         cost = request.POST["cost"]
+        price = request.POST["price"]
         name = request.POST["name"]
         description = request.POST["description"]
         crop = Crop(
@@ -46,6 +47,7 @@ def crop_create(request):
             season_id=season,
             category_id=category,
             production_cost=cost,
+            selling_price=price,
             description=description,
             user_id=request.user.id,
         )

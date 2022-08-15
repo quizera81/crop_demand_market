@@ -10,6 +10,7 @@ from ..models import Crop, Transaction, Category, Cooperative, Season
 from .category import *
 from .crop import *
 from .season import *
+from .analytics import *
 from .transaction import *
 from .cooperative import *
 
