@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from ..models import Crop, Transaction
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
+from django.db.models import Sum
 import pandas as pd
 import numpy as np
 
@@ -55,15 +56,22 @@ def analytics(request):
         start = request.POST["start"]
         analysis = RecommendedSystem()
 
-        for crop in Crop.objects.all().distinct("name"):
-            analysis.crops.append(crop["name"])
-            analysis.selling_price_per_kg.append(crop["selling_price"])
-            analysis.production_cost_per_kg.append(crop["production_cost"])
+        for crop in Crop.objects.all():
+            analysis.crops.append(crop.name)
+            analysis.selling_price_per_kg.append(crop.selling_price)
+            analysis.production_cost_per_kg.append(crop.production_cost)
 
-        for transaction in Transaction.objects.all().distinct("crop_id"):
-            analysis.kgs_sold.append()
-            analysis.kgs_received.append()
+            analysis.kgs_sold.append(
+                Transaction.objects.filter(
+                    transaction_type="sold", crop_id=crop.id
+                ).aggregate(Sum("quantity"))["quantity__sum"]
+            )
+            analysis.kgs_received.append(
+                Transaction.objects.filter(
+                    transaction_type="received", crop_id=crop.id
+                ).aggregate(Sum("quantity"))["quantity__sum"]
+            )
 
         analysis.dataframe()
         analysis.computations()
-        return HttpResponse(analysis.recommended_crop())
+        return HttpResponse("recommended crop: " + analysis.recommended_crop())
