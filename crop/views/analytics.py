@@ -25,6 +25,7 @@ class RecommendedSystem:
         }
 
         self.df = pd.DataFrame(data)
+        print(self.df)
 
     def computations(self):
         self.df["Total_Produced_Price"] = (
@@ -36,6 +37,7 @@ class RecommendedSystem:
         self.df["Profit made"] = (
             self.df["Total_Selling_Price"] - self.df["Total_Produced_Price"]
         )
+        print(self.df)
 
     def recommended_crop(self):
         trial = self.df

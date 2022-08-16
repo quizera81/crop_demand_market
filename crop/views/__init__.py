@@ -30,11 +30,17 @@ def profile(request, id):
 @require_http_methods(["GET"])
 def search(request):
     keyword = request.GET.get("keyword")
-    crops = Crop.objects.filter(Q(name=keyword))
-    seasons = Season.objects.filter(Q(name=keyword))
-    categories = Category.objects.filter(Q(name=keyword))
-    transactions = Transaction.objects.filter(Q(name=keyword))
-    cooperatives = Cooperative.objects.filter(Q(name=keyword))
+
+    crops = Crop.objects.filter(
+        Q(name__contains=keyword) | Q(description__contains=keyword)
+    )
+    seasons = Season.objects.filter(
+        Q(name__contains=keyword) | Q(description__contains=keyword)
+    )
+    categories = Category.objects.filter(
+        Q(name__contains=keyword) | Q(description__contains=keyword)
+    )
+    transactions = Transaction.objects.filter(Q(description__contains=keyword))
 
     return render(
         request,
@@ -45,7 +51,6 @@ def search(request):
             "seasons": seasons,
             "categories": categories,
             "transactions": transactions,
-            "cooperatives": cooperatives,
         },
     )
 
