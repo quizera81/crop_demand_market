@@ -25,7 +25,7 @@ class RecommendedSystem:
         }
 
         self.df = pd.DataFrame(data)
-        print(self.df)
+        return self.df
 
     def computations(self):
         self.df["Total_Produced_Price"] = (
@@ -37,7 +37,6 @@ class RecommendedSystem:
         self.df["Profit made"] = (
             self.df["Total_Selling_Price"] - self.df["Total_Produced_Price"]
         )
-        print(self.df)
 
     def recommended_crop(self):
         trial = self.df
@@ -74,6 +73,15 @@ def analytics(request):
                 ).aggregate(Sum("quantity"))["quantity__sum"]
             )
 
-        analysis.dataframe()
+        dataframe = analysis.dataframe()
         analysis.computations()
-        return HttpResponse("recommended crop: " + analysis.recommended_crop())
+        recommended_crop = analysis.recommended_crop()
+
+        return render(
+            request,
+            "analytics.html",
+            {
+                "dataframe": dataframe,
+                "recommended_crop": recommended_crop,
+            },
+        )

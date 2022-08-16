@@ -27,17 +27,24 @@
     <a class="btn btn-link" href="{% url 'dashboard' %}">Dashboard</a>
   </div>
 </form>
-{% endblock %}
-{% block styles %}
-<link href="{% static 'css/tagify.css' %}" rel="stylesheet" type="text/css" />
-{% endblock %}
-{% block scripts %}
-<script src="{% static 'js/tagify.js' %}"></script>
-<script src="{% static 'js/ckeditor.js' %}"></script>
-<script src="{% static 'js/tagify.polyfills.min.js' %}"></script>
-<script>
-  ClassicEditor.create(document.querySelector('#editor'))
-  let input = document.querySelector('input[name=tags]');
-  new Tagify(input)
-</script>
+{% if recommended_crop %}
+<h4 class='my-4'>Panda Dataframe</h4>
+<div class="table-responsive">
+  <table class='table table-hover'>
+    <tr>
+      {% for col in dataframe.columns %}
+      <td>{{ col }}</td>
+      {% endfor %}
+    </tr>
+      {% for index, row in dataframe.iterrows %}
+        <tr>
+          {% for cell in row %}
+          <td>{{ cell }}</td>
+          {% endfor %}
+        </tr>
+      {% endfor %}
+  </table>
+</div>
+<h6 class='text-center'>recommended crop: <span class='text-primary'>{{ recommended_crop }}</span></h6>
+{% endif %}
 {% endblock %}
