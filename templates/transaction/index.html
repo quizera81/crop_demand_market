@@ -31,10 +31,12 @@
       <td>{{transaction.transaction_type}}</td>
       <td>{{transaction.quantity}}</td>
       <td>{{transaction.created_at}}</td>
+      {% if transaction.user_id == user.id %}
       <td>
         <a href="{% url 'transaction.edit' id=transaction.id %}" class="btn btn-info">Edit</a>
         <a href="{% url 'transaction.delete' id=transaction.id %}" class="btn btn-warning">Delete</a>
       </td>
+      {% endif %}
     </tr>
     {% endfor %}
   </tbody>
