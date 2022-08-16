@@ -51,18 +51,22 @@ def transaction_create(request):
 
 
 @login_required(login_url="signin")
-def transaction_edit(request):
+def transaction_edit(request, id):
     transaction = get_object_or_404(Transaction, pk=id)
 
     if request.method == "GET":
         crops = Crop.objects.all()
-        return render(request, "transaction/edit.html", {"crops": crops})
+        return render(
+            request,
+            "transaction/edit.html",
+            {"crops": crops, "transaction": transaction},
+        )
 
     elif request.method == "POST":
         transaction.crop_id = request.POST["crop"]
         transaction.quantity = request.POST["quantity"]
         transaction.description = request.POST["description"]
-        transaction.transaction_type = request.POST["transaction_type"]
+        transaction.transaction_type = request.POST["type"]
 
         if transaction.user_id == request.user.id:
             transaction.save()
