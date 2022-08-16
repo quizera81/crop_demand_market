@@ -80,6 +80,8 @@ def crop_edit(request, id):
         crop.season_id = request.POST["season"]
         crop.category_id = request.POST["category"]
         crop.description = request.POST["description"]
+        crop.selling_price = request.POST["price"]
+        crop.production_cost = request.POST["cost"]
 
         if request.FILES.get("image") != None:
             crop.image = request.FILES.get("image")

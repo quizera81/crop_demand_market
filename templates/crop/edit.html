@@ -1,0 +1,73 @@
+{% extends 'layouts/admin.html' %}
+{% load static %}
+{% block title %} Crop {% endblock %}
+{% block content %}
+<h4>Edit crop</h4>
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+    <li class="breadcrumb-item"><a href="{% url 'crop.index' %}">Crop</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Edit crop</li>
+  </ol>
+</nav>
+<form action="#" method="post" enctype='multipart/form-data'>
+  <div class='row'>
+    <div class="col-md-6 mb-2">
+      <label for="name" class="form-label">Name</label>
+      <input type="text" class="form-control" name="name" placeholder='crop name' value="{{ crop.name }}" />
+    </div>
+    <div class="col-md-3 mb-2">
+      <label for="name" class="form-label">Production Cost</label>
+      <input type="number" class="form-control" name="cost" placeholder='200' value='{{ crop.production_cost }}' />
+    </div>
+    <div class="col-md-3 mb-2">
+      <label for="name" class="form-label">Selling Price</label>
+      <input type="number" class="form-control" name="price" placeholder='500' value='{{ crop.selling_price }}' />
+    </div>
+    <div class="col-md-4 mb-2">
+      <label for="tags" class="form-label">Season</label>
+      <select name='season' class='form-control'>
+        <option value='{{ crop.season_id }}'>{{ crop.season.name }}</option>
+        {% for season in seasons %}
+        <option value='{{ season.id }}'>{{ season.name }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="col-md-4 mb-2">
+      <label for="website" class="form-label">Category</label>
+      <select name='category' class='form-control'>
+        <option value='{{ crop.category_id }} '>{{ crop.category.name }}</option>
+        {% for category in categories %}
+        <option value='{{ category.id }}'>{{ category.name }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="col-md-4 mb-2">
+      <label for="image" class="form-label">Image</label>
+      <input type="file" class="form-control" name='image' accept='image/*' />
+    </div>
+  </div>
+  <div class="mb-2">
+    <label for="content" class="form-label">Description</label>
+    <textarea id='editor' class='form-control' name='description' rows='5' placeholder="Crop information">{{ crop.description }}</textarea>
+  </div>
+  {% csrf_token %}
+  <div class='d-flex justify-content-between'>
+    <button class="btn btn-primary" type="submit">Continue</button>
+    <a class="btn btn-link" href="{% url 'crop.index' %}">All crops</a>
+  </div>
+</form>
+{% endblock %}
+{% block styles %}
+<link href="{% static 'css/tagify.css' %}" rel="stylesheet" type="text/css" />
+{% endblock %}
+{% block scripts %}
+<script src="{% static 'js/tagify.js' %}"></script>
+<script src="{% static 'js/ckeditor.js' %}"></script>
+<script src="{% static 'js/tagify.polyfills.min.js' %}"></script>
+<script>
+  ClassicEditor.create(document.querySelector('#editor'))
+  let input = document.querySelector('input[name=tags]');
+  new Tagify(input)
+</script>
+{% endblock %}
