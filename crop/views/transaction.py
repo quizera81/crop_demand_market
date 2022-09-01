@@ -6,7 +6,8 @@ from django.contrib.auth.models import User, auth
 from django.forms.models import model_to_dict
 from django.core.paginator import Paginator
 from django.contrib import messages
-from ..models import Transaction, Cooperative, Crop
+from ..models import Transaction, Crop
+import pandas as pd
 
 
 @login_required(login_url="signin")
@@ -32,20 +33,44 @@ def transaction_create(request):
         return render(request, "transaction/create.html", {"crops": crops})
 
     elif request.method == "POST":
-        quantity = request.POST["quantity"]
-        description = request.POST["description"]
-        crop = request.POST["crop"]
-        transaction_type = request.POST["type"]
+        if request.FILES.get("excel") != None:
+            try:
+                df = pd.read_excel(request.FILES.get("excel"))
 
-        transaction = Transaction(
-            quantity=quantity,
-            description=description,
-            crop_id=crop,
-            transaction_type=transaction_type,
-            user_id=request.user.id,
-        )
+                for index, row in df.iterrows():
+                    if not Crop.objects.filter(name=row["crop"]).exists():
+                        messages.info(
+                            request, "Crop not found in excel row " + str(index + 2)
+                        )
 
-        transaction.save()
+                    transaction = Transaction(
+                        quantity=row["quantity"],
+                        crop_id=get_object_or_404(Crop, name=row["crop"]).id,
+                        description=row["description"],
+                        transaction_type=row["transaction type"],
+                        created_at=row["date"],
+                        user_id=request.user.id,
+                    )
+                    transaction.save()
+            except:
+                messages.info(request, "Unable to import excel file")
+                return redirect("transaction.create")
+
+        else:
+            quantity = request.POST["quantity"]
+            description = request.POST["description"]
+            crop = request.POST["crop"]
+            transaction_type = request.POST["type"]
+
+            transaction = Transaction(
+                quantity=quantity,
+                description=description,
+                crop_id=crop,
+                transaction_type=transaction_type,
+                user_id=request.user.id,
+            )
+
+            transaction.save()
         messages.info(request, "Transaction saved")
         return redirect("transaction.index")
 

@@ -10,9 +10,14 @@
     <li class="breadcrumb-item active" aria-current="page">Add new transaction</li>
   </ol>
 </nav>
+{% include 'partials/messages.html' %}
 <form action="#" method="post" enctype='multipart/form-data'>
   <div class='row'>
-    <div class="col-md-4 mb-2">
+    <div class='col-md-6 mb-2'>
+      <label for="formFileSm" class="form-label">Import data from excel</label>
+      <input type="file" class="form-control" name='excel' accept='.xlsx' />
+    </div>
+    <div class="col-md-6 mb-2">
       <label for="name" class="form-label">Crop</label>
       <select name="crop" class='form-control'>
         <option value=""> - select crop - </option>
@@ -21,11 +26,11 @@
         {% endfor %}
       </select>
     </div>
-    <div class="col-md-4 mb-2">
+    <div class="col-md-6 mb-2">
       <label for="name" class="form-label">Quantity</label>
       <input type="number" class="form-control" name="quantity" placeholder='120' />
     </div>
-    <div class="col-md-4 mb-2">
+    <div class="col-md-6 mb-2">
       <label for="name" class="form-label">Transaction Type</label>
       <select name="type" class="form-control">
         <option value=""> - select transaction type - </option>
