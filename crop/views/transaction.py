@@ -34,27 +34,24 @@ def transaction_create(request):
 
     elif request.method == "POST":
         if request.FILES.get("excel") != None:
-            try:
-                df = pd.read_excel(request.FILES.get("excel"))
+            # try:
+            df = pd.read_excel(request.FILES.get("excel"))
 
-                for index, row in df.iterrows():
-                    if not Crop.objects.filter(name=row["crop"]).exists():
-                        messages.info(
-                            request, "Crop not found in excel row " + str(index + 2)
-                        )
-
-                    transaction = Transaction(
-                        quantity=row["quantity"],
-                        crop_id=get_object_or_404(Crop, name=row["crop"]).id,
-                        description=row["description"],
-                        transaction_type=row["transaction type"],
-                        created_at=row["date"],
-                        user_id=request.user.id,
+            for index, row in df.iterrows():
+                if not Crop.objects.filter(name=row["crop"]).exists():
+                    messages.info(
+                        request, "Crop not found in excel row " + str(index + 2)
                     )
-                    transaction.save()
-            except:
-                messages.info(request, "Unable to import excel file")
-                return redirect("transaction.create")
+
+                transaction = Transaction(
+                    quantity=row["quantity"],
+                    crop_id=get_object_or_404(Crop, name=row["crop"]).id,
+                    description=row["description"],
+                    transaction_type=row["transaction type"],
+                    created_at=row["date"],
+                    user_id=request.user.id,
+                )
+                transaction.save()
 
         else:
             quantity = request.POST["quantity"]

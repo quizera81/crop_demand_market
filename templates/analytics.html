@@ -28,13 +28,18 @@
   </div>
 </form>
 {% if recommended_crop %}
-<div class='d-flex justify-content-between my-4'>
-  <h4>Crop Harvest & Sales Report</h4>
-  <a href="{% url 'transaction.create' %}" class="btn btn-primary">print</a>
-</div>
-<div class="table-responsive">
-  <table class='table table-hover table-bordered'>
+<button class="btn btn-primary float-end" onclick='printTable()'>print</button>
+<div class="table-responsive w-100">
+  <table class='table table-hover table-bordered my-3' id='print-table'>
     <thead>
+      <tr>
+        <th colspan="3" class='mx-auto'>
+          <Image src="/static/images/coproriz.png" width="100" height="100" />
+        </th>
+        <th colspan="6" class='text-center'>
+          <span class='fs-1 py-6 text-uppercase'>Crop Harvest Report</span>
+        </th>
+      </tr>
       <tr>
         {% for col in dataframe.columns %}
         <th>{{ col }}</th>
@@ -54,4 +59,18 @@
 </div>
 <h6 class='text-center'>recommended crop: <span class='text-primary'>{{ recommended_crop }}</span></h6>
 {% endif %}
+{% endblock %}
+{% block scripts %}
+<script>
+function printTable() {
+  let divToPrint = document.getElementById("print-table");
+  let newWin = window.open("");
+  newWin.document.write('<link rel="stylesheet" href="static/css/bootstrap.css" />' + divToPrint.outerHTML);
+
+  setTimeout(() => {
+    newWin.print();
+    newWin.close();
+  }, 1500)
+}
+</script>
 {% endblock %}
