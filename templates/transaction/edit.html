@@ -2,38 +2,33 @@
 {% load static %}
 {% block title %} Transaction {% endblock %}
 {% block content %}
-<h4>Add new transaction</h4>
+<h4>Edit transaction</h4>
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
     <li class="breadcrumb-item"><a href="{% url 'transaction.index' %}">Transaction</a></li>
-    <li class="breadcrumb-item active" aria-current="page">Add new transaction</li>
+    <li class="breadcrumb-item active" aria-current="page">Edit transaction</li>
   </ol>
 </nav>
-{% include 'partials/messages.html' %}
 <form action="#" method="post" enctype='multipart/form-data'>
   <div class='row'>
-    <div class='col-md-6 mb-2'>
-      <label for="formFileSm" class="form-label">Import data from excel</label>
-      <input type="file" class="form-control" name='excel' accept='.xlsx' />
-    </div>
-    <div class="col-md-6 mb-2">
+    <div class="col-md-4 mb-2">
       <label for="name" class="form-label">Crop</label>
       <select name="crop" class='form-control'>
-        <option value=""> - select crop - </option>
+        <option value="{{ transaction.crop_id }}">{{ transaction.crop.name }}</option>
         {% for crop in crops %}
         <option value="{{ crop.id }}">{{ crop.name }}</option>
         {% endfor %}
       </select>
     </div>
-    <div class="col-md-6 mb-2">
+    <div class="col-md-4 mb-2">
       <label for="name" class="form-label">Quantity</label>
-      <input type="number" class="form-control" name="quantity" placeholder='120' />
+      <input type="number" class="form-control" name="quantity" placeholder='120' value='{{ transaction.quantity }}' />
     </div>
-    <div class="col-md-6 mb-2">
+    <div class="col-md-4 mb-2">
       <label for="name" class="form-label">Transaction Type</label>
       <select name="type" class="form-control">
-        <option value=""> - select transaction type - </option>
+        <option value="{{ transaction.transaction_type }}">{{ transaction.transaction_type }}</option>
         <option value="received">received</option>
         <option value="sold">sold</option>
         <option value="expired">expired</option>
@@ -42,7 +37,7 @@
   </div>
   <div class="mb-2">
     <label for="content" class="form-label">Description</label>
-    <textarea id='editor' class='form-control' name='description' rows='5' placeholder="Transaction information"></textarea>
+    <textarea id='editor' class='form-control' name='description' rows='5' placeholder="Transaction information">{{ transaction.description }}</textarea>
   </div>
   {% csrf_token %}
   <div class='d-flex justify-content-between'>

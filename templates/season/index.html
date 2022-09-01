@@ -27,10 +27,12 @@
       <td>{{season.name}}</td>
       <td>{{season.description}}</td>
       <td>{{season.created_at}}</td>
+      {% if season.user_id == user.id %}
       <td>
         <a href="{% url 'season.edit' id=season.id %}" class="btn btn-info">Edit</a>
         <a href="{% url 'season.delete' id=season.id %}" class="btn btn-warning">Delete</a>
       </td>
+      {% endif %}
     </tr>
     {% endfor %}
   </tbody>

@@ -28,21 +28,28 @@
   </div>
 </form>
 {% if recommended_crop %}
-<h4 class='my-4'>Panda Dataframe</h4>
+<div class='d-flex justify-content-between my-4'>
+  <h4>Crop Harvest & Sales Report</h4>
+  <a href="{% url 'transaction.create' %}" class="btn btn-primary">print</a>
+</div>
 <div class="table-responsive">
-  <table class='table table-hover'>
-    <tr>
-      {% for col in dataframe.columns %}
-      <td>{{ col }}</td>
-      {% endfor %}
-    </tr>
-      {% for index, row in dataframe.iterrows %}
-        <tr>
-          {% for cell in row %}
-          <td>{{ cell }}</td>
-          {% endfor %}
-        </tr>
-      {% endfor %}
+  <table class='table table-hover table-bordered'>
+    <thead>
+      <tr>
+        {% for col in dataframe.columns %}
+        <th>{{ col }}</th>
+        {% endfor %}
+      </tr>
+    </thead>
+    <tbody>
+    {% for index, row in dataframe.iterrows %}
+      <tr>
+        {% for cell in row %}
+        <td>{{ cell }}</td>
+        {% endfor %}
+      </tr>
+    {% endfor %}
+    </tbody>
   </table>
 </div>
 <h6 class='text-center'>recommended crop: <span class='text-primary'>{{ recommended_crop }}</span></h6>
